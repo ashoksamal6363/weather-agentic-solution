@@ -1,10 +1,12 @@
 import os
-from typing import Optional, List
-
+import json
 from google.cloud import bigquery
+from google.oauth2 import service_account
 from mcp.server.fastmcp import FastMCP
 
-# MCP server name
+# -------------------------------------------------------
+# Initialize MCP Server
+# -------------------------------------------------------
 mcp = FastMCP("weather-bq-extended")
 
 # BigQuery client (uses GOOGLE_APPLICATION_CREDENTIALS)
