@@ -8,7 +8,7 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("weather-bq-extended")
 
 # BigQuery client (uses GOOGLE_APPLICATION_CREDENTIALS)
-sa_json = os.environ.get("gcp_sa_json")
+sa_json = os.environ.get("gcp_sa_json1")
 if sa_json:
     info = json.loads(sa_json)
     creds = service_account.Credentials.from_service_account_info(info)
