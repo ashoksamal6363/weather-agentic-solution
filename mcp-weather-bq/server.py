@@ -8,7 +8,14 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("weather-bq-extended")
 
 # BigQuery client (uses GOOGLE_APPLICATION_CREDENTIALS)
-bq_client = bigquery.Client()
+sa_json = os.environ.get("gcp_sa_json")
+if sa_json:
+    info = json.loads(sa_json)
+    creds = service_account.Credentials.from_service_account_info(info)
+    bq_client = bigquery.Client(credentials=creds, project=info.get("project_id"))
+else:
+    # falls back to default credentials if you ever run it locally with gcloud
+    bq_client = bigquery.Client()
 
 # Public NOAA GSOD dataset on BigQuery
 DATASET_TABLE = "bigquery-public-data.noaa_gsod.gsod*"
