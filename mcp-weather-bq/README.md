@@ -1,0 +1,1 @@
+"# mcp-bigquery-weather-data" 
