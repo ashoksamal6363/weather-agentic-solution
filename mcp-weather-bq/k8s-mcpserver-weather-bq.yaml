@@ -1,0 +1,41 @@
+apiVersion: toolhive.stacklok.dev/v1alpha1
+kind: MCPServer
+metadata:
+  name: weather-bq
+  namespace: toolhive-system
+spec:
+  image: quay.io/YOUR_QUAY_USER/weather-bq-mcp:latest
+  transport: stdio
+  port: 8080
+  permissionProfile:
+    type: builtin
+    name: network
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/gcp/key.json
+          volumeMounts:
+            - name: gcp-creds
+              mountPath: /var/secrets/gcp
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: gcp-creds
+          secret:
+            secretName: gcp-sa-weather
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
