@@ -3,7 +3,7 @@ import json
 from google.cloud import bigquery
 from google.oauth2 import service_account
 from mcp.server.fastmcp import FastMCP
-from typing import Optional
+from typing import Optional, List
 
 # -------------------------------------------------------
 # Initialize MCP Server
